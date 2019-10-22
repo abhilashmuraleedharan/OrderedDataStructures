@@ -5,6 +5,8 @@
  *   Abhilash Muraleedharan <amuraleedharan13@gmail.com>
  *
  */
+#pragma once
+
 #include <exception>
 #include <iostream>
 
