@@ -1,0 +1,5 @@
+To compile:
+   g++ main.cpp -o stack
+
+To run:
+   ./stack
