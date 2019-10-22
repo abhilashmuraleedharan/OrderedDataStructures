@@ -11,7 +11,7 @@
 template <typename T>
 class Queue {
    public:
-      Queue() : head_(nullptr), tail_(nullptr) { }
+      Queue() : head_(nullptr), tail_(nullptr), size_(0) { }
       
       ~Queue() {
          QueueNode *thru = head_;
@@ -25,30 +25,41 @@ class Queue {
 
       void push(const T & data);   // Pushes a new node with given data at the back of the queue.
       
-      const T & pop();   // Returns the front node data and deletes the node from the queue.
+      void pop();   // Deletes a node from the front of the queue.
       
       bool empty();   // Returns TRUE if the queue is empty, else returns FALSE.
       
-      const T & front();   // Returns the front node data. 
+      const T & front();   // Returns the front node data.
+
+      const T & back();    // Returns the last node data.
+
+      unsigned size();   // Returns the size of the queue. 
 
    private:
       class QueueNode {
          public:
-            const T & data;       // Stores node data
-            QueueNode *next;      // To point to next node in the queue
-            QueueNode *previous;  // To point to previous node in the queue
+            const T & data;       // Stores node data.
+            QueueNode *next;      // Points to next node in the queue.
+            QueueNode *previous;  // Points to previous node in the queue.
             
             QueueNode(const T & data) : data(data), next(nullptr), previous(nullptr) { }
       };
       
-      QueueNode *head_;  // To keep track of the front of the queue
-      QueueNode *tail_;  // To keep track of the tail of the queue
+      QueueNode *head_;  // Points to the node at the front of the queue.
+      QueueNode *tail_;  // Points to the node at the back of the queue.
+      unsigned size_;    // Stores the size of the queue
+      
 };
 
+/*
+ * Pushes a new node with given data at the back of the queue.
+ */
 template <typename T> 
 void Queue<T>::push(const T & data) {
+
    QueueNode *node = new QueueNode(data);
-   if (head_ == nullptr && tail_ == nullptr) {
+
+   if (empty()) {
       // This is the very first node
       node->next = nullptr;
       node->previous = nullptr;
@@ -61,13 +72,22 @@ void Queue<T>::push(const T & data) {
       tail_->next = node;
       tail_ = node;
    }
+
+   // Increment the queue size counter
+   size_++;
 }
 
+/*
+ * Deletes a node from the front of the queue
+ */
 template <typename T>
-const T & Queue<T>::pop() {
+void Queue<T>::pop() {
+
    if (!empty()) {
+
       const T & data = head_->data;
       QueueNode *toDelete = head_;
+
       if (head_ == tail_) {
          // This is the last node in the queue
          head_ = nullptr;
@@ -78,24 +98,55 @@ const T & Queue<T>::pop() {
       }
       delete toDelete;
       toDelete = nullptr;
-      return data;
+
+      // Decrement the queue size counter
+      size_--;
    } else {
-      std::cerr << "Tried to pop an empty queue!!!" << std::endl;
-      throw std::runtime_error("Pop failed since queue is empty.");   
-   }
+      std::cerr << "Nothing to pop. Queue is empty!" << std::endl;
+   } 
 }
 
+/*
+ * Checks whether the queue is empty.
+ * Returns TRUE if the queue is empty, else returns FALSE
+ */
 template <typename T>
 bool Queue<T>::empty() {
    return (head_ == nullptr && tail_ == nullptr);
 }
 
+/*
+ * Returns the front node data
+ */
 template <typename T>
 const T & Queue<T>::front() {
+
    if (!empty()) {
       return head_->data;
    } else {
       std::cerr << "Queue is empty!!!" << std::endl;
       throw std::runtime_error("Queue is empty");
    }
+}
+
+/*
+ * Returns the last node data.
+ */
+template <typename T>
+const T & Queue<T>::back() {
+
+   if (!empty()) {
+      return tail_->data;
+   } else {
+      std::cerr << "Queue is empty!!!" << std::endl;
+      throw std::runtime_error("Queue is empty");
+   }
+}
+
+/*
+ *  Returns the size of the queue
+ */
+template <typename T>
+unsigned Queue<T>::size() {
+   return size_;
 }
