@@ -29,13 +29,13 @@ class Queue {
       
       void pop();   // Deletes a node from the front of the queue.
       
-      bool empty();   // Returns TRUE if the queue is empty, else returns FALSE.
+      bool empty() const;   // Returns TRUE if the queue is empty, else returns FALSE.
       
-      const T & front();   // Returns the front node data.
+      const T & front() const;   // Returns the front node data.
 
-      const T & back();    // Returns the last node data.
+      const T & back() const;    // Returns the last node data.
 
-      unsigned size();   // Returns the size of the queue. 
+      unsigned size() const;   // Returns the size of the queue. 
 
    private:
       class QueueNode {
@@ -63,8 +63,6 @@ void Queue<T>::push(const T & data) {
 
    if (empty()) {
       // This is the very first node
-      node->next = nullptr;
-      node->previous = nullptr;
       head_ = node;
       tail_ = node;
    } else {
@@ -74,7 +72,6 @@ void Queue<T>::push(const T & data) {
       tail_->next = node;
       tail_ = node;
    }
-
    // Increment the queue size counter
    size_++;
 }
@@ -86,7 +83,6 @@ template <typename T>
 void Queue<T>::pop() {
 
    if (!empty()) {
-
       const T & data = head_->data;
       QueueNode *toDelete = head_;
 
@@ -113,7 +109,7 @@ void Queue<T>::pop() {
  * Returns TRUE if the queue is empty, else returns FALSE
  */
 template <typename T>
-bool Queue<T>::empty() {
+bool Queue<T>::empty() const {
    return (head_ == nullptr && tail_ == nullptr);
 }
 
@@ -121,7 +117,7 @@ bool Queue<T>::empty() {
  * Returns the front node data
  */
 template <typename T>
-const T & Queue<T>::front() {
+const T & Queue<T>::front() const {
 
    if (!empty()) {
       return head_->data;
@@ -135,7 +131,7 @@ const T & Queue<T>::front() {
  * Returns the last node data.
  */
 template <typename T>
-const T & Queue<T>::back() {
+const T & Queue<T>::back() const {
 
    if (!empty()) {
       return tail_->data;
@@ -149,6 +145,6 @@ const T & Queue<T>::back() {
  *  Returns the size of the queue
  */
 template <typename T>
-unsigned Queue<T>::size() {
+unsigned Queue<T>::size() const {
    return size_;
 }

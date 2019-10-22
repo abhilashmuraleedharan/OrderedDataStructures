@@ -29,11 +29,11 @@ class Stack {
 
       void pop();   // Deletes the top most element of the stack.
 
-      const T & top();   // Returns a reference to the top most element of the stack.
+      const T & top() const;   // Returns a reference to the top most element of the stack.
 
-      unsigned size();   // Returns the size of the stack.
+      unsigned size() const;   // Returns the size of the stack.
 
-      bool empty();   // Returns whether the stack is empty.
+      bool empty() const;   // Returns whether the stack is empty.
 
    private:
       class StackNode {
@@ -53,16 +53,8 @@ class Stack {
 template <typename T>
 void Stack<T>::push(const T & data) {
    StackNode *node =  new StackNode(data);
-   if (empty()) {
-      // This is the first node
-      node->next = nullptr;
-   } else {
-      // Not an empty stack
-      node->next = head_;
-   }
-   // Update head
+   node->next = head_;
    head_ = node;
-   // Increment stack size counter
    size_++;
 }
 
@@ -76,7 +68,6 @@ void Stack<T>::pop() {
       head_ = head_->next;
       delete toDelete;
       toDelete = nullptr;
-      // Decrement the stack size pointer
       size_--;
    } else {
       std::cerr << "Nothing to pop. Stack is empty!!!" << std::endl;
@@ -87,7 +78,7 @@ void Stack<T>::pop() {
  * Returns a reference to the top most element of the stack.
  */
 template <typename T>
-const T & Stack<T>::top() {
+const T & Stack<T>::top() const {
    if(!empty()) {
       return head_->data;
    } else {
@@ -100,7 +91,7 @@ const T & Stack<T>::top() {
  * Returns the size of the stack
  */
 template <typename T>
-unsigned Stack<T>::size() {
+unsigned Stack<T>::size() const {
    return size_;
 }
 
@@ -109,6 +100,6 @@ unsigned Stack<T>::size() {
  * Returns TRUE if the stack is empty, returns FALSE otherwise.
  */
 template <typename T>
-bool Stack<T>::empty() {
+bool Stack<T>::empty() const {
    return (head_ == nullptr);
 }

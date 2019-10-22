@@ -11,8 +11,8 @@
 // to include this file, we won't need to explicitly include List.hpp in
 // the main.cpp file.
 
-#include "List.h"
 #include <iostream>
+#include "List.h"
 
 /*
  * Overload operator[] to access an element of the list

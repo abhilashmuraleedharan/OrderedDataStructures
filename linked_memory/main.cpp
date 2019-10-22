@@ -1,9 +1,8 @@
 /*
  * Program to demonstrate the Single Linked List class List's Public methods
  */
-
-#include "List.h"
 #include <iostream>
+#include "List.h"
 
 int main() {
    std::cout << "Creating an integers list" << std::endl;

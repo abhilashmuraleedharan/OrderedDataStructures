@@ -5,8 +5,8 @@
  *   Abhilash Muraleedharan <amuraleedharan13@gmail.com>
  *
  */
-#include "Stack.h"
 #include <iostream>
+#include "Stack.h"
 
 int main() {
    // Create a stack:
